@@ -14,7 +14,7 @@ import java.text.*;
 
 public class FileViewer implements TreeWillExpandListener,TreeSelectionListener,ItemListener
  {
-	String combo_String="한국어";
+	static String combo_String="한국어";
 	String pathName1;
 	String title;
 	String[] language = { 
@@ -74,7 +74,7 @@ public class FileViewer implements TreeWillExpandListener,TreeSelectionListener,
   }
 
  void init(){
-   String msg1;
+  
    pMain.setResizeWeight(1);
    
    pSouth.add(combobox);
@@ -87,15 +87,12 @@ public class FileViewer implements TreeWillExpandListener,TreeSelectionListener,
    File file=new File("");
    File list[]=file.listRoots();
    DefaultMutableTreeNode temp;
-   if(combo_String=="한국어") {
-	   msg1 = "없음";
-   }
-   else msg1 = "None";
+  
   for(int i=0;i<list.length;++i)
    {
     temp=new DefaultMutableTreeNode(list[i].getPath());
     //언어 선택확인
-    temp.add(new DefaultMutableTreeNode(msg1));
+    temp.add(new DefaultMutableTreeNode("없음"));
     root.add(temp);
    }
    tree=new JTree(root);
@@ -157,7 +154,7 @@ public class FileViewer implements TreeWillExpandListener,TreeSelectionListener,
 	   msg3 = "디스크 혹은 파일을 찾을 수 없습니다.";
    }
    else {
-	   msg2 = "없음";
+	   msg2 = "None";
 	   msg3 = "Disk or File Not Found ";
    }
    if(((String)((DefaultMutableTreeNode)e.getPath().getLastPathComponent()).getUserObject()).equals("내컴퓨터")){}
@@ -202,9 +199,9 @@ public class FileViewer implements TreeWillExpandListener,TreeSelectionListener,
   {
 	  String pathName;
 	  if(combo_String=="한국어") {
-		  pathName = "내컴퓨터";
+		  pathName = "내 컴퓨터";
 	  }
-	  else pathName = "MyComputer";
+	  else pathName = "My Computer";
 		 
    if(((String)((DefaultMutableTreeNode)e.getPath().getLastPathComponent()).getUserObject()).equals("내컴퓨터")){
    //언어
@@ -326,12 +323,15 @@ class FView
 
  
 
-class ATable extends AbstractTableModel
+class ATable extends FileViewer implements TableModel
  {
-	//언어
-   String title[]={"이름", "크기", "종류","수정한 날짜"};
-   String val[][]=new String[1][4];
-   
+	static String val[][]=new String[1][4];
+	String title[];
+	ATable(){
+		//언어
+
+  
+	}
   public void setValueArr(int i)
   {
    val=new String[i][4];
@@ -362,4 +362,24 @@ class ATable extends AbstractTableModel
   public void setValueAt(String aValue, int rowIndex, int columnIndex ){
    val[rowIndex][columnIndex] = aValue;
   }
+@Override
+public void addTableModelListener(TableModelListener arg0) {
+	// TODO Auto-generated method stub
+	
+}
+@Override
+public Class<?> getColumnClass(int arg0) {
+	// TODO Auto-generated method stub
+	return null;
+}
+@Override
+public void removeTableModelListener(TableModelListener arg0) {
+	// TODO Auto-generated method stub
+	
+}
+@Override
+public void setValueAt(Object arg0, int arg1, int arg2) {
+	// TODO Auto-generated method stub
+	
+}
  }
